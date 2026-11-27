@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PMKVY Skill Gap Analyzer (PoC)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>PMKVY Skill Gap Analyzer</h1>
+      <p class="subtitle">Proof-of-Concept: Resume Analysis &amp; PMKVY Skill Gap Evaluation via Gemini API</p>
+    </header>
+
+    <!-- Top Connection & Configuration Bar -->
+    <section class="config-bar">
+      <div class="config-item">
+        <label for="apiKeyInput">Gemini API Key (using .env):</label>
+        <input type="password" id="apiKeyInput" placeholder="Using key from .env (optional to override)">
+      </div>
+      <div class="config-item config-model">
+        <label>Active Model:</label>
+        <div class="model-badge" id="activeModelBadge">gemini-3.5-flash-lite</div>
+      </div>
+      <div class="config-actions">
+        <button type="button" id="testConnBtn" class="secondary-btn">Test Gemini Connection</button>
+        <button type="button" id="loadSampleBtn" class="link-btn">Load Sample Candidate</button>
+      </div>
+    </section>
+
+    <!-- Status / Alert Banner -->
+    <div id="statusBanner" class="banner hidden"></div>
+
+    <!-- Main Analysis Form -->
+    <form id="analyzerForm" enctype="multipart/form-data">
+      
+      <!-- Section A: Resume Input -->
+      <fieldset class="form-section">
+        <legend>A. Resume Input (Upload PDF or Paste Text)</legend>
+        
+        <div class="field-group">
+          <label for="resumeFile">1. Upload PDF Resume:</label>
+          <input type="file" id="resumeFile" name="resumeFile" accept=".pdf,application/pdf">
+          <small class="help-text">Select a text-based PDF resume (max 10MB).</small>
+        </div>
+
+        <div class="field-divider"><span>OR</span></div>
+
+        <div class="field-group">
+          <label for="resumeText">2. Paste Resume Text:</label>
+          <textarea id="resumeText" name="resumeText" rows="6" placeholder="Paste full resume text here (education, technical skills, projects, experience)..."></textarea>
+        </div>
+      </fieldset>
+
+      <!-- Section B & C: Desired Occupation and Location -->
+      <div class="form-row">
+        <div class="form-section flex-1">
+          <label for="occupation"><strong>B. Desired Occupation:</strong> <span class="required">*</span></label>
+          <input type="text" id="occupation" name="occupation" required placeholder="e.g. Data Analyst, Solar Panel Technician">
+        </div>
+
+        <div class="form-section flex-1">
+          <label for="location"><strong>C. Preferred Location:</strong></label>
+          <input type="text" id="location" name="location" placeholder="e.g. Ludhiana, Punjab, India">
+        </div>
+      </div>
+
+      <!-- Section D: Submit Button -->
+      <div class="submit-container">
+        <button type="submit" id="submitBtn" class="primary-btn">Analyze Resume &amp; Find PMKVY Courses</button>
+      </div>
+    </form>
+
+    <!-- Loading Spinner -->
+    <div id="loadingIndicator" class="loading-box hidden">
+      <div class="spinner"></div>
+      <div class="loading-text">
+        <strong>Analyzing resume &amp; evaluating skill gaps via Gemini (gemini-3.5-flash-lite)...</strong>
+        <p>Extracting profile competencies and benchmarking against National Qualification Register standards.</p>
+      </div>
+    </div>
+
+    <!-- Section E: Results Area -->
+    <section id="resultsSection" class="results-container hidden">
+      <h2>E. Gemini Analysis &amp; Skill Gap Evaluation</h2>
+      <div class="results-controls">
+        <button id="toggleRawBtn" class="small-btn">Toggle Plain Text / Formatted</button>
+        <button id="copyResultsBtn" class="small-btn">Copy Response</button>
+      </div>
+      <div id="formattedOutput" class="formatted-output"></div>
+      <pre id="rawOutput" class="raw-output hidden"></pre>
+    </section>
+
+    <!-- Debug & Telemetry Section -->
+    <section class="debug-container">
+      <h3>Debug &amp; API Telemetry</h3>
+      <div class="debug-grid">
+        <div class="debug-cell">
+          <span class="debug-label">Gemini API Status:</span>
+          <span id="debugStatus" class="debug-val status-unknown">Checking...</span>
+        </div>
+        <div class="debug-cell">
+          <span class="debug-label">Gemini Model:</span>
+          <span id="debugModel" class="debug-val">gemini-3.5-flash-lite</span>
+        </div>
+        <div class="debug-cell">
+          <span class="debug-label">Connection Test Reply:</span>
+          <span id="debugTestReply" class="debug-val">-</span>
+        </div>
+        <div class="debug-cell">
+          <span class="debug-label">Resume Text Extraction:</span>
+          <span id="debugResumeExtraction" class="debug-val">-</span>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>PMKVY Skill Gap Analyzer PoC &bull; Model: <code>gemini-3.5-flash-lite</code> &bull; Express.js &amp; @google/genai</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

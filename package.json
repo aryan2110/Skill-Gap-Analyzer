@@ -1,0 +1,25 @@
+{
+  "name": "pmkvy-skill-gap-analyzer",
+  "version": "1.0.0",
+  "description": "Proof-of-concept web application for PMKVY skill gap analysis and course discovery using Google Gemini API with Search Grounding",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "pmkvy",
+    "skill-gap-analyzer",
+    "gemini",
+    "google-search-grounding",
+    "nqr"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google/genai": "^3.6.1",
+    "dotenv": "^18.0.10",
+    "express": "^5.3.0",
+    "multer": "^2.5.0",
+    "pdf-parse": "^2.4.5"
+  }
+}
